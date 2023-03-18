@@ -34,19 +34,28 @@ const App: React.FC = () => {
 
   const triggerGeneratePastelArt = async () => {
     setLoading(true);
+    const promptType = promptInput ? PromptType.Custom : PromptType.Default;
     const response = await fetch(`${API_URL}/generate_pastel_art`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        prompt_input: promptInput
-      }),
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            input: promptInput,
+            type: promptType,
+        }),
     });
     const data = await response.json();
     setTaskId(data.task_id);
     checkTaskStatus(data.task_id);
-  };
+};
+
+// Add the PromptType enum to your code:
+const PromptType = {
+    Random: "RANDOM",
+    Default: "DEFAULT",
+    Custom: "CUSTOM",
+};
 
   const checkTaskStatus = async (task_id: string) => {
     const response = await fetch(
