@@ -9,6 +9,9 @@ import {
 import { extendTheme } from "@chakra-ui/react";
 import { createBreakpoints } from "@chakra-ui/theme-tools";
 
+
+const API_URL = import.meta.env['VITE_API_URL'] as string
+
 const breakpoints = createBreakpoints({
   sm: "30em",
   md: "48em",
@@ -29,7 +32,7 @@ const App: React.FC = () => {
 
   const triggerGeneratePastelArt = async () => {
     setLoading(true);
-    const response = await fetch("http://localhost:8000/generate_pastel_art", {
+    const response = await fetch(`${API_URL}/generate_pastel_art`, {
       method: "POST",
     });
     const data = await response.json();
@@ -39,12 +42,11 @@ const App: React.FC = () => {
 
   const checkTaskStatus = async (task_id: string) => {
     const response = await fetch(
-      `http://localhost:8000/generate_pastel_art/${task_id}`
+      `${API_URL}/generate_pastel_art/${task_id}`
     );
     const data = await response.json();
     if (data.status === "success") {
-      setImageUrl(data.result[1]);
-      setResultText(data.result[0]);
+      setImageUrl(data.result);
       setLoading(false);
     } else if (data.status === "pending") {
       setTimeout(() => checkTaskStatus(task_id), 1000);
