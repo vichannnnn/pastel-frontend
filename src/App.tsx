@@ -5,6 +5,7 @@ import {
   Image,
   Text,
   Box,
+  Input
 } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import { createBreakpoints } from "@chakra-ui/theme-tools";
@@ -29,11 +30,18 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [taskId, setTaskId] = useState("");
   const [resultText, setResultText] = useState("");
+  const [promptInput, setPromptInput] = useState("");
 
   const triggerGeneratePastelArt = async () => {
     setLoading(true);
     const response = await fetch(`${API_URL}/generate_pastel_art`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt_input: promptInput
+      }),
     });
     const data = await response.json();
     setTaskId(data.task_id);
@@ -66,8 +74,8 @@ const App: React.FC = () => {
       <VStack spacing={8} alignItems="center">
         <Text fontSize="2xl">Pastel Art Generator</Text>
         <Box
-          width="512px"
-          height="512px"
+          width="448px"
+          height="640px"
           bg={imageUrl ? "transparent" : "gray.100"}
           display="flex"
           alignItems="center"
@@ -77,12 +85,17 @@ const App: React.FC = () => {
             <Image
               src={imageUrl}
               alt="Generated pastel art"
-              width="512px"
-              height="512px"
+              width="448px"
+              height="640px"
               objectFit="cover"
             />
           )}
         </Box>
+        <Input
+          placeholder="Enter prompt input"
+          value={promptInput}
+          onChange={(event) => setPromptInput(event.target.value)}
+        />
         <Button
           colorScheme="teal"
           onClick={triggerGeneratePastelArt}
