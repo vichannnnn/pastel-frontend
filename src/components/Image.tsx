@@ -10,13 +10,18 @@ interface ImageProps {
 }
 
 const Image: React.FC<ImageProps> = ({ src, alt, width, height, prompt }) => {
+  // Construct the data URI for the base64-encoded image
+  const dataUri = `data:image/png;base64,${src}`;
+
   return (
     <Tooltip label={prompt} hasArrow placement="top">
-    <Box borderRadius="md" overflow="hidden" boxShadow="base" mb={4}>
-      <AspectRatio ratio={7 / 10}>
-        <ChakraImage src={src} alt={alt} width={width} height={height} objectFit="cover" />
-      </AspectRatio>
-    </Box>
+      <Box borderRadius="md" overflow="hidden" boxShadow="base" mb={4}>
+        <AspectRatio ratio={7 / 10}>
+          <ChakraImage src="" alt={alt} width={width} height={height} objectFit="cover">
+            <img src={dataUri} alt={alt} width={width} height={height} />
+          </ChakraImage>
+        </AspectRatio>
+      </Box>
     </Tooltip>
   );
 };
