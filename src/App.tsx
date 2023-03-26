@@ -5,9 +5,10 @@ import { fetchImages, ImageData } from './api/fetchImages';
 import NavBar from './components/NavBar';
 import LandingPage from './components/LandingPage';
 import Footer from './components/Footer';
+import Generator from './components/Generator';
 import { ChakraProvider } from '@chakra-ui/react';
 
-type View = 'landingPage' | 'gallery';
+type View = 'landingPage' | 'gallery' | 'generator';
 
 const App: React.FC = () => {
   const [images, setImages] = useState<ImageData[]>([]);
@@ -38,18 +39,26 @@ const App: React.FC = () => {
     setCurrentView('landingPage');
   };
 
+  const handleGeneratorClick = () => {
+    setCurrentView('generator');
+  };
+
   return (
     <ChakraProvider>
       <div>
-        <NavBar onClicks={{ onGalleryClick: handleGalleryClick, onLandingPageClick: handleLandingPageClick }} />
+        <NavBar onClicks={{ onGalleryClick: handleGalleryClick, 
+          onLandingPageClick: handleLandingPageClick, 
+          onGeneratorClick: handleGeneratorClick }} />
         {currentView === 'landingPage' ? (
           <LandingPage />
-        ) : (
+        ) : currentView === 'gallery' ? (
           <>
             <Gallery images={images} isLoading={isLoading} />
             <Pagination totalPages={maxPage} currentPage={page} onPageChange={setPage} />
           </>
-        )}
+        ) : (
+          <Generator />
+        )} 
       </div>
       < Footer/>
     </ChakraProvider>

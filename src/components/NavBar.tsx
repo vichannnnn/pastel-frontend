@@ -6,6 +6,7 @@ interface NavBarProps {
   onClicks: {
     onGalleryClick: () => void;
     onLandingPageClick: () => void;
+    onGeneratorClick: () => void;
   };
 }
 
@@ -22,7 +23,7 @@ const NavBar: React.FC<NavBarProps> = ({ onClicks }) => {
         style={{ cursor: "pointer" }}
         onClick={onClicks.onLandingPageClick}
       />
-      <CenterMenu onGalleryClick={onClicks.onGalleryClick} />
+      <CenterMenu onGalleryClick={onClicks.onGalleryClick} onGeneratorClick={onClicks.onGeneratorClick} />
       <div className="buttons flex">
         <button
           className={`mr-[35px] hover:bg-[#232A4E] ` + buttonStyle}
