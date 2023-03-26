@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "game-clone",
   "version": "0.1.0",
   "private": true,
@@ -44,5 +45,45 @@
     "typescript": "^4.9.5",
     "vite": "^4.1.4",
     "vite-plugin-svgr": "^2.4.0"
+=======
+  "name": "gallery-app",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.17",
+    "@chakra-ui/react": "^2.5.2",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@types/node": "^18.15.5",
+    "axios": "^1.3.4",
+    "file-loader": "^6.2.0",
+    "framer-motion": "^10.6.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-masonry-css": "^1.0.16",
+    "react-simple-typewriter": "^5.0.1",
+    "react-typewriter-hook": "^1.0.1",
+    "react-typist": "^2.0.5",
+    "react-visibility-sensor": "^5.1.1",
+    "tailwindcss": "^3.2.7"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@types/react-typist": "^2.0.3",
+    "@vitejs/plugin-react": "^3.1.0",
+    "autoprefixer": "^10.4.2",
+    "postcss": "^8.4.7",
+    "typescript": "^4.9.3",
+    "vite": "^4.2.0"
+>>>>>>> d004982 (update)
   }
 }

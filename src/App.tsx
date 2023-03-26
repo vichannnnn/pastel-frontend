@@ -1,120 +1,58 @@
-import React, { useState } from "react";
-import {
-  VStack,
-  Button,
-  Image,
-  Text,
-  Box,
-  Input
-} from "@chakra-ui/react";
-import { extendTheme } from "@chakra-ui/react";
-import { createBreakpoints } from "@chakra-ui/theme-tools";
+import React, { useEffect, useState } from 'react';
+import Gallery from './components/Gallery';
+import Pagination from './components/Pagination';
+import { fetchImages, ImageData } from './api/fetchImages';
+import NavBar from './components/NavBar';
+import LandingPage from './components/LandingPage';
+import Footer from './components/Footer';
+import { ChakraProvider } from '@chakra-ui/react';
 
-
-const API_URL = import.meta.env['VITE_API_URL'] as string
-
-const breakpoints = createBreakpoints({
-  sm: "30em",
-  md: "48em",
-  lg: "62em",
-  xl: "80em",
-  "2xl": "96em",
-});
-
-const theme = extendTheme({
-  breakpoints,
-});
+type View = 'landingPage' | 'gallery';
 
 const App: React.FC = () => {
-  const [imageUrl, setImageUrl] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [taskId, setTaskId] = useState("");
-  const [resultText, setResultText] = useState("");
-  const [promptInput, setPromptInput] = useState("");
+  const [images, setImages] = useState<ImageData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(0);
+  const [currentView, setCurrentView] = useState<View>('landingPage');
 
-  const triggerGeneratePastelArt = async () => {
-    setLoading(true);
-    const promptType = promptInput ? PromptType.Custom : PromptType.Default;
-    const response = await fetch(`${API_URL}/generate_pastel_art`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            input: promptInput,
-            type: promptType,
-        }),
-    });
-    const data = await response.json();
-    setTaskId(data.task_id);
-    checkTaskStatus(data.task_id);
-};
+  useEffect(() => {
+    const loadImages = async () => {
+      setIsLoading(true);
+      const { images: newImages, maxPage: newMaxPage } = await fetchImages(page);
+      setImages(newImages);
+      setMaxPage(newMaxPage);
+      setIsLoading(false);
+    };
 
-// Add the PromptType enum to your code:
-const PromptType = {
-    Random: "RANDOM",
-    Default: "DEFAULT",
-    Custom: "CUSTOM",
-};
-
-  const checkTaskStatus = async (task_id: string) => {
-    const response = await fetch(
-      `${API_URL}/generate_pastel_art/${task_id}`
-    );
-    const data = await response.json();
-    if (data.status === "success") {
-      setImageUrl(data.result);
-      setLoading(false);
-    } else if (data.status === "pending") {
-      setTimeout(() => checkTaskStatus(task_id), 1000);
-    } else {
-      console.error("Task failed:", data.error);
-      setLoading(false);
+    if (currentView === 'gallery') {
+      loadImages();
     }
+  }, [maxPage, page, currentView]);
+
+  const handleGalleryClick = () => {
+    setCurrentView('gallery');
+  };
+
+  const handleLandingPageClick = () => {
+    setCurrentView('landingPage');
   };
 
   return (
-    <Box
-      minHeight="100vh"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <VStack spacing={8} alignItems="center">
-        <Text fontSize="2xl">Pastel Art Generator</Text>
-        <Box
-          width="448px"
-          height="640px"
-          bg={imageUrl ? "transparent" : "gray.100"}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          {imageUrl && (
-            <Image
-              src={imageUrl}
-              alt="Generated pastel art"
-              width="448px"
-              height="640px"
-              objectFit="cover"
-            />
-          )}
-        </Box>
-        <Input
-          placeholder="Enter prompt input"
-          value={promptInput}
-          onChange={(event) => setPromptInput(event.target.value)}
-        />
-        <Button
-          colorScheme="teal"
-          onClick={triggerGeneratePastelArt}
-          isLoading={loading}
-        >
-          Generate Art
-        </Button>
-        <Text>{resultText}</Text>
-      </VStack>
-    </Box>
+    <ChakraProvider>
+      <div>
+        <NavBar onClicks={{ onGalleryClick: handleGalleryClick, onLandingPageClick: handleLandingPageClick }} />
+        {currentView === 'landingPage' ? (
+          <LandingPage />
+        ) : (
+          <>
+            <Gallery images={images} isLoading={isLoading} />
+            <Pagination totalPages={maxPage} currentPage={page} onPageChange={setPage} />
+          </>
+        )}
+      </div>
+      < Footer/>
+    </ChakraProvider>
   );
 };
 
