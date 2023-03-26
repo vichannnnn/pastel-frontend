@@ -1,3 +1,5 @@
+const API_URL = import.meta.env['VITE_API_URL'] as string
+
 export interface ImageData {
     id: number;
     src: string;
@@ -8,7 +10,7 @@ export interface ImageData {
   }
   
   export const fetchImages = async (page = 1): Promise<{ images: ImageData[]; maxPage: number }> => {
-    const response = await fetch(`http://localhost:8000/get_all?page=${page}`);
+    const response = await fetch(`${API_URL}/get_all?page=${page}`);
     const responseJson = await response.json();
     const data = responseJson['items'];
     const totalItems = responseJson['total']

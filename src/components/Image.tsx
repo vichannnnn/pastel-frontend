@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tooltip, Box, Image as ChakraImage, AspectRatio } from '@chakra-ui/react';
 
+
 interface ImageProps {
   src: string;
   alt: string;
