@@ -5,7 +5,6 @@ services:
     container_name: frontend
     networks:
       - internal-network
-      - default
     build:
       context: .
       dockerfile: Dockerfile
