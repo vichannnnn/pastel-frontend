@@ -11,7 +11,7 @@ interface ImageProps {
 }
 
 const Image: React.FC<ImageProps> = ({ src, alt, width, height, prompt }) => {
-  const dataUri = `data:image/png;base64,${src}`;
+  const dataUri = `http://192.168.10.127/images/${src}`;
 
   return (
     <Tooltip label={prompt} hasArrow placement="top">
