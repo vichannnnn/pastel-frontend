@@ -39,7 +39,7 @@ const Generator: React.FC = () => {
   const [numGuidance, setNumGuidance] = useState(7);
   const [numHeight, setNumHeight] = useState(640);
   const [numWidth, setNumWidth] = useState(448);
-
+  const [imageGenerated, setImageGenerated] = useState(false);
 
   const triggerGeneratePastelArt = async () => {
     setLoading(true);
@@ -69,8 +69,10 @@ const Generator: React.FC = () => {
     );
     const data = await response.json();
     if (data.status === "success") {
-      setImageUrl(`${IMAGE_URL}/images/${data.result}`);
+      const imageUrl = `${IMAGE_URL}/images/${data.result}`
+      setImageUrl(imageUrl);
       setLoading(false);
+      setImageGenerated(true);
     } else if (data.status === "pending") {
       setTimeout(() => checkTaskStatus(task_id), 1000);
     } else {
@@ -78,6 +80,27 @@ const Generator: React.FC = () => {
       setLoading(false);
     }
   };
+
+  const downloadImage = (imageUrl: string) => {
+    fetch(imageUrl)
+      .then((response) => {
+        response.arrayBuffer().then(function (buffer) {
+          const url = window.URL.createObjectURL(new Blob([buffer]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "generated-image.png");
+          document.body.appendChild(link);
+          link.click();
+          link.parentNode?.removeChild(link);
+        });
+      })
+      .catch((error) => {
+        console.error("Error downloading image:", error);
+      });
+  };
+  
+
+  
 
   return (
     <Box
@@ -107,6 +130,13 @@ const Generator: React.FC = () => {
             />
           )}
         </Box>
+        <Button
+          colorScheme="teal"
+          onClick={() => downloadImage(imageUrl)}
+          isDisabled={!imageGenerated}
+        >
+          Download Image
+        </Button>
         <Textarea
           placeholder="Enter prompt input"
           defaultValue={defaultPrompt}
@@ -127,7 +157,7 @@ const Generator: React.FC = () => {
           height="100px"
           width="800px"
         />
-        <Text color="white" fontWeight="bold" fontSize="md">
+        {/* <Text color="white" fontWeight="bold" fontSize="md">
           Width: {numWidth}
         </Text>
         <CustomSlider
@@ -150,7 +180,7 @@ const Generator: React.FC = () => {
           step={1}
           onChange={setNumHeight}
           width="800px"
-        />
+        /> */}
         <Text color="white" fontWeight="bold" fontSize="md">
           Steps: {numSteps}
         </Text>
