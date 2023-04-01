@@ -2,6 +2,7 @@ import React from 'react';
 import { Tooltip, Box, Image as ChakraImage, AspectRatio } from '@chakra-ui/react';
 
 const API_URL = import.meta.env['VITE_API_URL'] as string
+const IMAGE_URL = import.meta.env['VITE_IMAGE_URL'] as string
 
 interface ImageProps {
   src: string;
@@ -12,7 +13,7 @@ interface ImageProps {
 }
 
 const Image: React.FC<ImageProps> = ({ src, alt, width, height, prompt }) => {
-  const dataUri = `${API_URL}/images/${src}`;
+  const dataUri = `${IMAGE_URL}/images/${src}`;
 
   return (
     <Tooltip label={prompt} hasArrow placement="top">
