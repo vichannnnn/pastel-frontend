@@ -20,17 +20,20 @@ const Gallery: React.FC<GalleryProps> = ({ images, isLoading }) => {
     '2xl': 5,
   });
 
+  const imageWidth = useBreakpointValue({ base: '100%', sm: '400px' }) || '400px';
+  const imageHeight = useBreakpointValue({ base: 'auto', sm: '500px' }) || '500px';
+
   const renderImages = () => {
     return images.map((image) => (
       <Image
         key={image.id}
         src={image.src}
         alt={image.alt}
-        width="auto"
-        height="auto"
+        width={imageWidth}
+        height={imageHeight}
         prompt={image.prompt}
       />
-    ));
+    ));     
   };
 
   return (
