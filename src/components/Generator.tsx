@@ -5,7 +5,8 @@ import {
   Image,
   Text,
   Box,
-  Textarea
+  Textarea,
+  useBreakpointValue
 } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import { createBreakpoints } from "@chakra-ui/theme-tools";
@@ -40,6 +41,12 @@ const Generator: React.FC = () => {
   const [numHeight, setNumHeight] = useState(640);
   const [numWidth, setNumWidth] = useState(448);
   const [imageGenerated, setImageGenerated] = useState(false);
+
+  const textSize = useBreakpointValue({ base: "md", md: "2xl" });
+  const sliderWidth = useBreakpointValue({ base: "95%", md: "800px" }) || "95%";
+  const textareaWidth = useBreakpointValue({ base: "95%", md: "800px" }) || "95%";
+  const imageWidth = useBreakpointValue({ base: "95%", md: "448px" })  || "95%";
+  const imageHeight = useBreakpointValue({ base: "auto", md: "640px" });
 
   const triggerGeneratePastelArt = async () => {
     setLoading(true);
@@ -99,22 +106,21 @@ const Generator: React.FC = () => {
       });
   };
   
-
-  
-
   return (
     <Box
       minHeight="100vh"
       display="flex"
       alignItems="center"
       justifyContent="center"
-      style={{backgroundColor: "#081730", paddingTop: "4rem"}}
+      style={{ backgroundColor: "#081730", paddingTop: "4rem" }}
     >
       <VStack spacing={8} alignItems="center">
-        <Text fontSize="2xl" color="#ffffff">Pastel Art Generator</Text>
+        <Text fontSize={textSize} color="#ffffff">
+          Pastel Art Generator
+        </Text>
         <Box
-          width="448px"
-          height="640px"
+          width={imageWidth}
+          height={imageHeight}
           bg={imageUrl ? "transparent" : "gray.600"}
           display="flex"
           alignItems="center"
@@ -124,8 +130,8 @@ const Generator: React.FC = () => {
             <Image
               src={imageUrl}
               alt="Generated pastel art"
-              width="448px"
-              height="640px"
+              width={imageWidth}
+              height={imageHeight}
               objectFit="cover"
             />
           )}
@@ -145,7 +151,7 @@ const Generator: React.FC = () => {
           size="lg"
           resize="none"
           height="100px"
-          width="800px"
+          width={textareaWidth}
         />
         <Textarea
           placeholder="Enter negative prompt input"
@@ -155,32 +161,8 @@ const Generator: React.FC = () => {
           size="lg"
           resize="none"
           height="100px"
-          width="800px"
+          width={textareaWidth}
         />
-        {/* <Text color="white" fontWeight="bold" fontSize="md">
-          Width: {numWidth}
-        </Text>
-        <CustomSlider
-          ariaLabel="Width"
-          defaultValue={numWidth}
-          min={0}
-          max={1024}
-          step={1}
-          onChange={setNumWidth}
-          width="800px"
-        />
-        <Text color="white" fontWeight="bold" fontSize="md">
-          Height: {numHeight}
-        </Text>
-        <CustomSlider
-          ariaLabel="Height"
-          defaultValue={numHeight}
-          min={0}
-          max={1024}
-          step={1}
-          onChange={setNumHeight}
-          width="800px"
-        /> */}
         <Text color="white" fontWeight="bold" fontSize="md">
           Steps: {numSteps}
         </Text>
@@ -191,7 +173,7 @@ const Generator: React.FC = () => {
           max={100}
           step={1}
           onChange={setNumSteps}
-          width="800px"
+          width={sliderWidth}
         />
         <Text color="white" fontWeight="bold" fontSize="md">
           Guidance: {numGuidance}
@@ -203,7 +185,7 @@ const Generator: React.FC = () => {
           max={15}
           step={0.1}
           onChange={setNumGuidance}
-          width="800px"
+          width={sliderWidth}
         />
         <Button
           colorScheme="teal"
