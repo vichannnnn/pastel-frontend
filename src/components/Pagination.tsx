@@ -9,7 +9,7 @@ interface PaginationProps {
 
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
   const MAX_VISIBLE_PAGES = 5; 
-  const buttonSize = useBreakpointValue({ base: 'sm', md: 'lg' });
+  const buttonSize = useBreakpointValue({ base: 'xs', md: 'lg' });
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages && newPage !== currentPage) {
