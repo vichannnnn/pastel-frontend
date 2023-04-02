@@ -1,6 +1,7 @@
 import React from "react";
 import CenterMenu from "./CenterMenu";
 import logo from "../assets/MuzicLogo.png";
+import "./NavBar.css";
 
 interface NavBarProps {
   onClicks: {
@@ -23,7 +24,7 @@ const NavBar: React.FC<NavBarProps> = ({ onClicks }) => {
         style={{ cursor: "pointer" }}
         onClick={onClicks.onLandingPageClick}
       />
-      <CenterMenu onGalleryClick={onClicks.onGalleryClick} onGeneratorClick={onClicks.onGeneratorClick} />
+      <CenterMenu onLandingPageClick= {onClicks.onLandingPageClick} onGalleryClick={onClicks.onGalleryClick} onGeneratorClick={onClicks.onGeneratorClick} />
       <div className="buttons flex">
         <button
           className={`mr-[35px] hover:bg-[#232A4E] ` + buttonStyle}

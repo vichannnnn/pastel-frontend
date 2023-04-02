@@ -1,0 +1,40 @@
+.footer {
+    /* Mobile styles */
+    padding: 3rem 1rem;
+    height: auto;
+    z-index: 1;
+    background-color: #081730;
+  
+    /* Tablet styles */
+    @media (min-width: 768px) {
+      padding: 3rem 2rem;
+      height: 10rem;
+    }
+  
+    /* Desktop styles */
+    @media (min-width: 1024px) {
+      padding: 3rem 5rem;
+      height: 20rem;
+    }
+  }
+  
+  /* Social icons */
+  .social-icon {
+    /* Mobile styles */
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+    border: 2px solid white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    /* Tablet and desktop styles */
+    @media (min-width: 768px) {
+      margin-right: 2rem;
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+  

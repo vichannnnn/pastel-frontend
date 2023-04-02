@@ -1,0 +1,38 @@
+.experience {
+    background-color: #020917;
+  }
+  
+  .headline {
+    font-family: "Montserrat", sans-serif;
+  }
+  
+  .feature {
+    margin-top: 3rem;
+  }
+  
+  .feature > div {
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .experience {
+      height: 60rem;
+      padding-top: 7rem;
+    }
+  
+    .headline {
+      font-size: 4xl;
+      margin-bottom: 3rem;
+    }
+  
+    .feature {
+      flex-direction: row;
+      margin-top: 4rem;
+      width: 80%;
+    }
+  
+    .feature > div {
+      margin-bottom: 0;
+    }
+  }
+  

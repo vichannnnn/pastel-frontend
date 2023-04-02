@@ -1,5 +1,6 @@
 import React from "react";
 import { Facebook, Twitter, YouTube, LinkedIn } from "@material-ui/icons";
+import "./Footer.css"
 
 const Footer: React.FC = () => {
   const SocialStyle = "rounded-full border-2 border-whit p-2 ";
