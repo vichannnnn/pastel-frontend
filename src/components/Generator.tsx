@@ -41,6 +41,7 @@ const Generator: React.FC = () => {
   const [numHeight, setNumHeight] = useState(640);
   const [numWidth, setNumWidth] = useState(448);
   const [imageGenerated, setImageGenerated] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const textSize = useBreakpointValue({ base: "md", md: "2xl" });
   const sliderWidth = useBreakpointValue({ base: "95%", md: "800px" }) || "95%";
@@ -84,8 +85,10 @@ const Generator: React.FC = () => {
       setTimeout(() => checkTaskStatus(task_id), 1000);
     } else {
       console.error("Task failed:", data.error);
+      setErrorMessage("Oh no! Something went wrong!");
       setLoading(false);
     }
+    
   };
 
   const downloadImage = (imageUrl: string) => {
@@ -187,6 +190,7 @@ const Generator: React.FC = () => {
           onChange={setNumGuidance}
           width={sliderWidth}
         />
+        <Text color="red.500">{errorMessage}</Text>
         <Button
           colorScheme="teal"
           onClick={triggerGeneratePastelArt}

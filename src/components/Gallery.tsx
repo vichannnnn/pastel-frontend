@@ -1,9 +1,8 @@
 import React from 'react';
 import Masonry from 'react-masonry-css';
-import { Box, Skeleton } from '@chakra-ui/react';
+import { Box, Container, useBreakpointValue } from '@chakra-ui/react';
 import Image from './Image';
 import './Gallery.css';
-import { Container } from '@chakra-ui/react';
 import { ImageData } from '../api/fetchImages';
 
 interface GalleryProps {
@@ -12,13 +11,14 @@ interface GalleryProps {
 }
 
 const Gallery: React.FC<GalleryProps> = ({ images, isLoading }) => {
-    const breakpointColumnsObj = {
-        default: 5,
-        1400: 4,
-        1100: 3,
-        700: 2,
-        500: 1,
-      };
+  const breakpointColumnsObj = useBreakpointValue({
+    base: 1,
+    sm: 2,
+    md: 3,
+    lg: 4,
+    xl: 5,
+    '2xl': 5,
+  });
       
       
 
@@ -31,13 +31,13 @@ const Gallery: React.FC<GalleryProps> = ({ images, isLoading }) => {
   return (
     <Box style={{backgroundColor: "#081730"}}>
       <Container maxW="80%" py={4} style={{ paddingTop: "4rem" }}>
-        <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
-        >
-          {renderImages()}
-        </Masonry>
+      <Masonry
+        breakpointCols={breakpointColumnsObj || 1}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+      >
+        {renderImages()}
+      </Masonry>
       </Container>
     </Box>
   );

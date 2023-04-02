@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Button, Box } from '@chakra-ui/react';
+import { Flex, Button, Box, useBreakpointValue } from '@chakra-ui/react';
 
 interface PaginationProps {
   currentPage: number;
@@ -9,6 +9,7 @@ interface PaginationProps {
 
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
   const MAX_VISIBLE_PAGES = 5; 
+  const buttonSize = useBreakpointValue({ base: 'sm', md: 'lg' });
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages && newPage !== currentPage) {
@@ -39,7 +40,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
       <Button
         key={i}
         onClick={() => handlePageChange(i)}
-        size="lg"
+        size={buttonSize}
         fontWeight={i === currentPage ? 'bold' : 'normal'}
         colorScheme={i === currentPage ? 'blue' : 'gray'}
         marginRight="0.5rem"
@@ -53,17 +54,17 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
     <Box style={{ backgroundColor: "#081730" }}>
       <Flex flexDirection="column" alignItems="center" paddingTop="1rem" paddingBottom="4rem">
         <Flex flexDirection="row">
-          <Button onClick={() => handlePageChange(1)} disabled={currentPage === 1} size="lg" >
+          <Button onClick={() => handlePageChange(1)} disabled={currentPage === 1} size={buttonSize} >
             {'<<'}
           </Button>
-          <Button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} size="lg" marginLeft="0.5rem" marginRight="0.5rem">
+          <Button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} size={buttonSize} marginLeft="0.5rem" marginRight="0.5rem">
             {'<'}
           </Button>
           {pageNumbers}
-          <Button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages} size="lg" marginRight="0.5rem">
+          <Button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages} size={buttonSize} marginRight="0.5rem">
             {'>'}
           </Button>
-          <Button onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages} size="lg">
+          <Button onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages} size={buttonSize}>
             {'>>'}
           </Button>
         </Flex>
